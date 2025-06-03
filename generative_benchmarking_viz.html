@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Benchmarking Visualizations</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        .viz-section {
+            margin-bottom: 50px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .step-box {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            font-weight: bold;
+        }
+        
+        .step-box.filter {
+            background: #e74c3c;
+        }
+        
+        .step-box.generate {
+            background: #27ae60;
+        }
+        
+        .step-box.test {
+            background: #9b59b6;
+        }
+        
+        .arrow {
+            font-size: 24px;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        
+        .chunk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .chunk {
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .chunk.good {
+            background: #d5f4e6;
+            color: #27ae60;
+            border: 2px solid #27ae60;
+        }
+        
+        .chunk.bad {
+            background: #fadbd8;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+            opacity: 0.6;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .comparison-box {
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .naive {
+            background: #fadbd8;
+            border: 2px solid #e74c3c;
+        }
+        
+        .aligned {
+            background: #d5f4e6;
+            border: 2px solid #27ae60;
+        }
+        
+        .query-example {
+            background: #ecf0f1;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-style: italic;
+        }
+        
+        .metric-bar {
+            height: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            position: relative;
+            background: #ecf0f1;
+        }
+        
+        .metric-fill {
+            height: 100%;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .high { background: #27ae60; }
+        .medium { background: #f39c12; }
+        .low { background: #e74c3c; }
+        
+        .invert-concept {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .invert-flow {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .invert-step {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Generative Benchmarking Visualizations</h1>
+        
+        <div class="viz-section">
+            <h2>1. The Core Problem</h2>
+            <div style="text-align: center; padding: 20px; background: #fff3cd; border-radius: 8px;">
+                <div style="font-size: 18px; margin-bottom: 15px;">📚 You have: <strong>Documents</strong></div>
+                <div style="font-size: 18px; margin-bottom: 15px;">❌ You need: <strong>Query-Document Pairs</strong></div>
+                <div style="font-size: 16px; color: #856404;">Can't evaluate retrieval without knowing what queries should match which documents!</div>
+            </div>
+        </div>
+
+        <div class="viz-section">
+            <h2>2. Generative Benchmarking Process</h2>
+            <div class="flow-diagram">
+                <div class="step-box">13K Document Chunks</div>
+                <span class="arrow">→</span>
+                <div class="step-box filter">Chunk Filtering<br><small>(LLM Judge)</small></div>
+                <span class="arrow">→</span>
+                <div class="step-box generate">Query Generation<br><small>(Context + Examples)</small></div>
+                <span class="arrow">→</span>
+                <div class="step-box test">Retrieval Testing<br><small>(Recall@K)</small></div>
+            </div>
+        </div>
+
+        <div class="viz-section">
+            <h2>3. Chunk Filtering in Action</h2>
+            <div style="text-align: center; margin-bottom: 15px;">
+                <strong>From 13,000 chunks → 8,500 relevant chunks</strong>
+            </div>
+            <div class="chunk-grid">
+                <div class="chunk good">API Docs</div>
+                <div class="chunk good">Error Codes</div>
+                <div class="chunk bad">News Article</div>
+                <div class="chunk good">Tutorials</div>
+                <div class="chunk bad">Marketing Copy</div>
+                <div class="chunk good">Config Guide</div>
+                <div class="chunk bad">Startup Funding</div>
+                <div class="chunk good">Troubleshooting</div>
+            </div>
+            <div style="text-align: center; margin-top: 15px; color: #7f8c8d;">
+                ✅ Keep chunks users would actually query<br>
+                ❌ Filter out irrelevant content
+            </div>
+        </div>
+
+        <div class="viz-section">
+            <h2>4. The "Invert Your Data" Concept</h2>
+            <div class="invert-concept">
+                <h3 style="margin-top: 0;">🔄 Normal vs Generative Approach</h3>
+                <div class="invert-flow">
+                    <div class="invert-step">
+                        <strong>Normal Search</strong><br>
+                        Query → Find Document
+                    </div>
+                    <div style="font-size: 24px;">vs</div>
+                    <div class="invert-step">
+                        <strong>Generative Eval</strong><br>
+                        Document → Generate Query → Test Retrieval
+                    </div>
+                </div>
+                <div style="margin-top: 20px; font-size: 14px; opacity: 0.9;">
+                    Create the missing half of the equation!
+                </div>
+            </div>
+        </div>
+
+        <div class="viz-section">
+            <h2>5. Naive vs Aligned Generation</h2>
+            <div class="comparison">
+                <div class="comparison-box naive">
+                    <h3>❌ Naive Generation</h3>
+                    <div class="query-example">"What is the purpose of artifact versioning in Weights and Biases?"</div>
+                    <div style="margin: 10px 0; font-size: 14px;">Too formal, complete sentences</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill high" style="width: 90%;">90% Recall</div>
+                    </div>
+                    <div style="font-size: 12px; color: #c0392b;">High scores but unrealistic!</div>
+                </div>
+                
+                <div class="comparison-box aligned">
+                    <h3>✅ Aligned Generation</h3>
+                    <div class="query-example">"artifact versioning not working"</div>
+                    <div style="margin: 10px 0; font-size: 14px;">Realistic, ambiguous user queries</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill medium" style="width: 65%;">65% Recall</div>
+                    </div>
+                    <div style="font-size: 12px; color: #27ae60;">Lower scores but matches reality!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="viz-section">
+            <h2>6. Alignment Process</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0;">
+                <div style="text-align: center;">
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                        <strong>Manual Labels</strong><br>
+                        300 chunks<br>
+                        (Good/Bad)
+                    </div>
+                </div>
+                <span class="arrow">→</span>
+                <div style="text-align: center;">
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                        <strong>LLM Judge</strong><br>
+                        3 criteria<br>
+                        (Relevance, Completeness, Intent)
+                    </div>
+                </div>
+                <span class="arrow">→</span>
+                <div style="text-align: center;">
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                        <strong>Alignment Score</strong><br>
+                        40% → 90%<br>
+                        (Iterate until good)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="viz-section">
+            <h2>7. Key Insight: Public Benchmarks ≠ Real Performance</h2>
+            <div style="background: #fff3cd; padding: 20px; border-radius: 8px; text-align: center;">
+                <h3 style="margin-top: 0;">MTEB Rankings vs W&B Reality</h3>
+                <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+                    <div>
+                        <strong>MTEB Says:</strong><br>
+                        Gina > OpenAI Large
+                    </div>
+                    <div style="font-size: 24px;">≠</div>
+                    <div>
+                        <strong>W&B Reality:</strong><br>
+                        OpenAI Large > Gina
+                    </div>
+                </div>
+                <div style="font-size: 14px; color: #856404;">
+                    Rankings completely flipped on real data!
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #e8f5e8; padding: 25px; border-radius: 12px; text-align: center; margin-top: 40px;">
+            <h3 style="margin-top: 0; color: #27ae60;">💡 Remember: Invert Your Data</h3>
+            <div style="font-size: 16px;">
+                Documents → Generate Queries → Test Retrieval<br>
+                <small style="opacity: 0.8;">Build evaluation that matches your users and use case</small>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
