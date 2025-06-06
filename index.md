@@ -6,7 +6,7 @@
 
 - [office_hour_question_ans](https://gist.github.com/Gaurav-Adlakha/79ca422708435056e95c93d6bd43024f)
 
-- [office_hour_question_6th_june]((https://gist.github.com/Gaurav-Adlakha/1a88addfe78c7d4cfb1f11b4bdca3e50)
+- [office_hour_question_6th_june](https://gist.github.com/Gaurav-Adlakha/1a88addfe78c7d4cfb1f11b4bdca3e50)
 
 
 - -----
