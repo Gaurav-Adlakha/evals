@@ -8,5 +8,7 @@
 
 - [office_hour_question_6th_june](https://gist.github.com/Gaurav-Adlakha/1a88addfe78c7d4cfb1f11b4bdca3e50)
 
+- [Agent evaluations and Transition Matrices](failure-funnels-summary.html)
+
 
 - -----
