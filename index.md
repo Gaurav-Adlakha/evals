@@ -10,5 +10,7 @@
 
 - [Agent evaluations and Transition Matrices](failure-funnels-summary.html)
 
+- [office hours 8th June](office_hours_8th_june_summary.md)
+
 
 - -----
