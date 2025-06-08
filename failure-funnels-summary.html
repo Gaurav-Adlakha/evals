@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Failure Funnels Summary - Bryan Bischof</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .header {
+            background: #2c3e3e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 3em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin-top: 10px;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        /* Coffee Section */
+        .coffee-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover {
+            background: #ecf0f1;
+            transform: translateY(-2px);
+        }
+        
+        .checkbox {
+            width: 40px;
+            height: 40px;
+            background: #7fb069;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: white;
+            font-size: 1.5em;
+        }
+        
+        /* Great Evals Section */
+        .evals-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .highlight {
+            color: #e67e22;
+            font-style: italic;
+        }
+        
+        .concept-box {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            margin: 20px 0;
+        }
+        
+        /* Transition Matrix */
+        .matrix-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            min-width: 600px;
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: #34495e;
+            color: white;
+        }
+        
+        .row-header {
+            background: #ecf0f1;
+            text-align: left;
+            font-weight: bold;
+            padding-left: 15px;
+        }
+        
+        .diagonal {
+            background: #ffe6e6;
+            font-weight: bold;
+        }
+        
+        .improvement {
+            background: #d4f1d4;
+            font-weight: bold;
+        }
+        
+        .regression {
+            background: #ffcccc;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        
+        .empty {
+            background: #f8f9fa;
+            color: #ccc;
+        }
+        
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        /* Example Box */
+        .example-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        /* Key Insights */
+        .key-point {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .evals-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .coffee-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Failure Funnels</h1>
+        <p>Building AI Apps Like a Data Scientist - Bryan Bischof, Theory Ventures</p>
+    </div>
+    
+    <div class="container">
+        <!-- Coffee Analogy Section -->
+        <div class="section">
+            <h2>🫘 The Coffee Brewing Analogy</h2>
+            <p>Complex processes fail in specific ways. Like brewing coffee, AI systems have multiple steps where things can go wrong:</p>
+            
+            <div class="coffee-steps">
+                <div class="step">
+                    <div class="checkbox">✓</div>
+                    <div>
+                        <strong>Grab a dripper</strong><br>
+                        <span style="color: #666;">(a funnel with filter)</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="checkbox">✓</div>
+                    <div>
+                        <strong>Heat water</strong><br>
+                        <span style="color: #666;">(202-208°F)</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="checkbox">✓</div>
+                    <div>
+                        <strong>Ratio of beans:water</strong><br>
+                        <span style="color: #666;">(1:16)</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="checkbox">✓</div>
+                    <div>
+                        <strong>Grind the beans</strong><br>
+                        <span style="color: #666;">(~800 microns)</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="checkbox">✓</div>
+                    <div>
+                        <strong>Pour prettily</strong><br>
+                        <span style="color: #666;">(~2:30; gentle circles)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>Key Insight:</strong> Each step is an opportunity for failure. Instead of "your coffee sucks," you need "your water is too cold" - specific feedback at specific steps.
+            </div>
+        </div>
+        
+        <!-- What Great Evals Do -->
+        <div class="section">
+            <h2>🎯 What Do Great Evals Do?</h2>
+            <div class="concept-box">
+                <h3 style="margin-top: 0; color: #2e7d32;">Great evals show you which of your assumptions are False</h3>
+                <p>To build a successful capability, you need to overcome a series of steps or assumptions, but the final question is:</p>
+                <p class="highlight">"Did the AI succeed in the job the user hired it to do?"</p>
+                <p>Before we can assess that, there are many assumptions that if we don't validate, we have <strong>no chance</strong> of providing any value.</p>
+            </div>
+        </div>
+        
+        <!-- SQL Example -->
+        <div class="section">
+            <h2>💾 Natural Language to SQL Example</h2>
+            <p>Bryan breaks down SQL evaluation into sequential stages:</p>
+            
+            <ol style="font-size: 1.1em; line-height: 1.8;">
+                <li><strong>Can it generate syntactically valid SQL?</strong></li>
+                <li><strong>Does the query execute without errors?</strong></li>
+                <li><strong>Does it return relevant results?</strong></li>
+                <li><strong>Does it match user intent?</strong></li>
+                <li><strong>Does it solve the problem?</strong></li>
+            </ol>
+            
+            <div class="key-point">
+                <strong>Sequential Dependencies:</strong> If SQL doesn't run, nothing else matters. Each stage gates the next.
+            </div>
+        </div>
+        
+        <!-- Transition Matrix Section -->
+        <div class="section">
+            <h2>📊 Transition Matrices - The Power Tool</h2>
+            <p>Transition matrices show exactly how queries move between failure states when you change your system.</p>
+            
+            <h3>Simple Example: Math Test Retakes</h3>
+            <div class="example-box">
+                <p>10 students took a test. After tutoring, here's what happened:</p>
+                
+                <div class="matrix-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Started Here →</th>
+                                <th>Can't Start</th>
+                                <th>Wrong Formula</th>
+                                <th>Calc Errors</th>
+                                <th>Passed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="row-header">Can't Start (3)</td>
+                                <td class="diagonal">1</td>
+                                <td class="improvement">1</td>
+                                <td class="improvement">1</td>
+                                <td class="empty">-</td>
+                            </tr>
+                            <tr>
+                                <td class="row-header">Wrong Formula (4)</td>
+                                <td class="empty">-</td>
+                                <td class="diagonal">1</td>
+                                <td class="improvement">1</td>
+                                <td class="improvement">2</td>
+                            </tr>
+                            <tr>
+                                <td class="row-header">Calc Errors (3)</td>
+                                <td class="empty">-</td>
+                                <td class="empty">-</td>
+                                <td class="diagonal">0</td>
+                                <td class="improvement">3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color diagonal"></div>
+                        <span>Stayed Same</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color improvement"></div>
+                        <span>Improved</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color regression"></div>
+                        <span>Got Worse</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Key Benefits</h3>
+            <ul>
+                <li><strong>See patterns:</strong> All calc-error students passed (100% success rate)</li>
+                <li><strong>Target interventions:</strong> "Can't start" group needs different help</li>
+                <li><strong>Catch regressions:</strong> Red cells show when changes make things worse</li>
+            </ul>
+            
+            <div class="concept-box">
+                <p><strong>Bryan's Quote:</strong> "I don't care that we went from 54% to 93% success. I want to know WHERE the improvements happened!"</p>
+            </div>
+        </div>
+        
+        <!-- Key Concepts -->
+        <div class="section">
+            <h2>🔑 Key Concepts</h2>
+            
+            <h3>Relaxations</h3>
+            <p>Ways to assess outcomes more flexibly. For SQL: order doesn't matter unless explicitly requested, column names can vary, formatting differences are okay.</p>
+            
+            <h3>Funnel vs Sankey</h3>
+            <p><strong>Funnel:</strong> Linear flow (A→B→C→D), perfect for sequential processes<br>
+            <strong>Sankey:</strong> Shows multiple paths and splits, width indicates volume</p>
+            <p>Bryan uses funnels because SQL evaluation is strictly sequential.</p>
+            
+            <h3>Binary Evaluation</h3>
+            <p>Use pass/fail instead of scores. If you need a gradient, define your threshold and make it binary.</p>
+        </div>
+        
+        <!-- Main Takeaways -->
+        <div class="section">
+            <h2>💡 Main Takeaways</h2>
+            <ol style="font-size: 1.1em; line-height: 1.8;">
+                <li><strong>Break everything into small, testable steps</strong></li>
+                <li><strong>Each step is a potential failure point</strong></li>
+                <li><strong>Use transition matrices to see exactly what changed</strong></li>
+                <li><strong>Focus on WHERE improvements happen, not just overall metrics</strong></li>
+                <li><strong>Binary pass/fail beats complex scoring</strong></li>
+            </ol>
+            
+            <div class="key-point" style="margin-top: 30px;">
+                <strong>The Core Philosophy:</strong> Don't just know it failed. Know exactly where, why, and what to fix next.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
