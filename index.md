@@ -12,5 +12,8 @@
 
 - [office hours 8th June](office_hours_8th_june_summary.md)
 
+- [promp guide](prompt-engineering-guide.md)
+
+
 
 - -----
