@@ -17,6 +17,8 @@
 - [guest lecture Kramer voice agent](https://gist.github.com/Gaurav-Adlakha/246c3f28189f32d8e5b01884c104f668)
 - [guest lecture Brooke(Coval) voice agent](https://gist.github.com/Gaurav-Adlakha/3468696ffd85cd4f4a37b7f34043f108)
 
+- [guest lecture Arush(Groq)](groq_ci_summary.md)
+
 
 
 - -----
