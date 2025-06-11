@@ -19,6 +19,8 @@
 
 - [guest lecture Arush(Groq)](groq_ci_summary.md)
 
+- [guest lecture Alex Volkov LRM] (https://gist.github.com/Gaurav-Adlakha/f5ac65ce266fcf9e086b7afa0e4d11b9)
+
 
 
 - -----
