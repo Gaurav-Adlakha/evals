@@ -22,6 +22,8 @@
 - [guest lecture Alex Volkov LRM](https://gist.github.com/Gaurav-Adlakha/f5ac65ce266fcf9e086b7afa0e4d11b9)
   
 - [guest lecture Daniel Superlinked](https://gist.github.com/Gaurav-Adlakha/4d888ec34de824627eb8c604d8907be3)
+- [study session -1(15th June)](https://gist.github.com/Gaurav-Adlakha/b3f9348310bb32b2515460af9537d5fe)
+
 
 
 
