@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Taxonomy</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        .taxonomy-section {
+            margin-bottom: 50px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border-left: 5px solid #4299e1;
+        }
+        
+        h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        /* Tree Structure Styles */
+        .tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .tree-level {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .tree-node {
+            background: #4299e1;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            position: relative;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .tree-node:hover {
+            transform: translateY(-2px);
+        }
+        
+        .level-1 { background: #e53e3e; }
+        .level-2 { background: #dd6b20; }
+        .level-3 { background: #38a169; }
+        .level-4 { background: #3182ce; }
+        .level-5 { background: #805ad5; }
+        
+        /* Connection Lines */
+        .connections {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        
+        .line {
+            height: 20px;
+            border-left: 2px solid #a0aec0;
+            margin: 0 30px;
+        }
+        
+        /* Grid Layout for categories */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .category-box {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .category-box:hover {
+            border-color: #4299e1;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .category-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .category-desc {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        /* Organizational Chart Style */
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .chart-level {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .chart-node {
+            background: white;
+            border: 3px solid #4299e1;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            min-width: 140px;
+            position: relative;
+        }
+        
+        .chart-node::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #4299e1;
+        }
+        
+        .root-node::before {
+            display: none;
+        }
+        
+        .highlight-box {
+            background: #fed7d7;
+            border: 2px solid #f56565;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .key-points {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .key-points ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Understanding Taxonomy</h1>
+        
+        <div class="taxonomy-section">
+            <h2>🌳 Basic Tree Structure</h2>
+            <p>Taxonomy is like a family tree - broader categories at the top, specific items at the bottom:</p>
+            
+            <div class="tree">
+                <div class="tree-level">
+                    <div class="tree-node level-1">Living Things</div>
+                </div>
+                <div class="connections">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <div class="tree-level">
+                    <div class="tree-node level-2">Animals</div>
+                    <div class="tree-node level-2">Plants</div>
+                </div>
+                <div class="connections">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <div class="tree-level">
+                    <div class="tree-node level-3">Mammals</div>
+                    <div class="tree-node level-3">Birds</div>
+                    <div class="tree-node level-3">Trees</div>
+                </div>
+                <div class="connections">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <div class="tree-level">
+                    <div class="tree-node level-4">Cats</div>
+                    <div class="tree-node level-4">Dogs</div>
+                </div>
+                <div class="connections">
+                    <div class="line"></div>
+                </div>
+                <div class="tree-level">
+                    <div class="tree-node level-5">House Cat</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="taxonomy-section">
+            <h2>📚 Library Classification Example</h2>
+            <p>Libraries use taxonomy to organize books:</p>
+            
+            <div class="category-grid">
+                <div class="category-box">
+                    <div class="category-title">000-099</div>
+                    <div class="category-desc">Computer Science, Information</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-title">100-199</div>
+                    <div class="category-desc">Philosophy, Psychology</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-title">200-299</div>
+                    <div class="category-desc">Religion, Theology</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-title">300-399</div>
+                    <div class="category-desc">Social Sciences</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-title">500-599</div>
+                    <div class="category-desc">Pure Sciences</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-title">600-699</div>
+                    <div class="category-desc">Technology, Medicine</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="taxonomy-section">
+            <h2>🤖 LLM Error Taxonomy Example</h2>
+            <p>Software teams create taxonomies to classify different types of failures:</p>
+            
+            <div class="org-chart">
+                <div class="chart-level">
+                    <div class="chart-node root-node">
+                        <strong>LLM Pipeline Failures</strong>
+                    </div>
+                </div>
+                
+                <div class="chart-level">
+                    <div class="chart-node">
+                        <strong>Input Processing</strong><br>
+                        <small>Problems understanding queries</small>
+                    </div>
+                    <div class="chart-node">
+                        <strong>Tool Usage</strong><br>
+                        <small>Wrong tools or arguments</small>
+                    </div>
+                    <div class="chart-node">
+                        <strong>Output Quality</strong><br>
+                        <small>Poor responses</small>
+                    </div>
+                </div>
+                
+                <div class="chart-level">
+                    <div class="chart-node">
+                        <strong>Missing Constraints</strong><br>
+                        <small>Ignores user filters</small>
+                    </div>
+                    <div class="chart-node">
+                        <strong>Tone Mismatch</strong><br>
+                        <small>Wrong style for audience</small>
+                    </div>
+                    <div class="chart-node">
+                        <strong>Hallucination</strong><br>
+                        <small>Made-up facts</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <strong>🎯 Why Taxonomies Matter:</strong>
+            <ul>
+                <li><strong>Organization:</strong> Turn chaos into order</li>
+                <li><strong>Communication:</strong> Shared vocabulary for teams</li>
+                <li><strong>Problem-solving:</strong> Identify patterns and root causes</li>
+                <li><strong>Efficiency:</strong> Find what you need quickly</li>
+            </ul>
+        </div>
+
+        <div class="key-points">
+            <strong>🔑 Key Taxonomy Principles:</strong>
+            <ul>
+                <li><strong>Hierarchical:</strong> General → Specific</li>
+                <li><strong>Mutually Exclusive:</strong> Clear boundaries between categories</li>
+                <li><strong>Comprehensive:</strong> Covers all relevant items</li>
+                <li><strong>Useful:</strong> Serves the purpose it was designed for</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
