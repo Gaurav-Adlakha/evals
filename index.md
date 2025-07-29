@@ -26,6 +26,8 @@
 - [taxonomy](taxonomy_visualizations.html)
 - [taxonomy,open coding, axial coding](https://gist.github.com/Gaurav-Adlakha/3f782f2f50aa4fb86db7794e7a028ad6)
 
+- [lecture 1 slide](https://docs.google.com/presentation/d/12ndjfeAImYSxAFQ4Nxw-2CVaG068mmG-3viaoieCWlo/edit?slide=id.gc6f919934_0_0#slide=id.gc6f919934_0_0)
+
 
 
 
